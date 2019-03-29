@@ -19,15 +19,15 @@
 			<div class="form-group">
 				{{ Form::token() }}
 				<label for="name">Name:</label>
-				<input type="text" class="form-control" name="name" id="name">
+				<input type="text" class="form-control" name="name" id="name" value="{{ Input::old('name') }}">
 			</div>
 			<div class="form-group">
 				<label for="isbn">ISBN:</label>
-				<input type="text" class="form-control" name="isbn" id="isbn">
+				<input type="text" class="form-control" name="isbn" id="isbn" value="{{ Input::old('isbn') }}">
 			</div>
 			<div class="form-group">
 				<label for="price">Price:</label>
-				<input type="text" class="form-control" name="price" id="price">
+				<input type="text" class="form-control" name="price" id="price" value="{{ Input::old('price') }}">
 			</div>
 			<button type="submit" class="btn btn-primary">Create Book</button>
 		</form>

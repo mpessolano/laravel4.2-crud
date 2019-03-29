@@ -31,7 +31,35 @@ class BookController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$rules = array(
+			'name'  => 'required|max:255',
+			'isbn'  => 'required|alpha_num',
+			'price' => 'required|numeric', 
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) 
+		{
+			return Redirect::to('books/create')->withErrors($validator)->withInput(Input::all());
+		}
+
+		// $book = Book::create([
+		// 	'name'  => Input::get('name'),
+		// 	'isbn'  => Input::get('isbn'),
+		// 	'price' => Input::get('price')
+		// ]);
+
+		// $book = Book::create(Input::all());
+
+		$book = new Book;
+		$book->name  = Input::get('name');
+		$book->isbn  = Input::get('isbn');
+		$book->price = Input::get('price');
+		$book->save();
+
+		// Session::flash('success', 'Book is successfully saved');
+		return Redirect::to('books')->with('success', 'Book is successfully saved');
 	}
 
 
