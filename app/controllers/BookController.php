@@ -86,7 +86,9 @@ class BookController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$book = Book::findOrFail($id);
+
+		return View::make('books.edit', compact('book'));
 	}
 
 
@@ -98,7 +100,33 @@ class BookController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$rules = array(
+			'name'  => 'required|max:255',
+			'isbn'  => 'required|alpha_num',
+			'price' => 'required|numeric',
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) 
+		{
+			return Redirect::to('books/'.$id.'/edit')->withErrors($validator)->withInput(Input::all());
+		}
+
+		// Book::whereId($id)->update([
+		// 	'name'  => Input::get('name'),
+		// 	'isbn'  => Input::get('isbn'),
+		// 	'price' => Input::get('price')
+		// ]);
+
+		$book = Book::find($id);
+		$book->name  = Input::get('name');
+		$book->isbn  = Input::get('isbn');
+		$book->price = Input::get('price');
+		$book->save();
+
+		//Session::flash('success', 'Book is successfully updated');
+		return Redirect::to('books')->with('success', 'Book is successfully updated');
 	}
 
 

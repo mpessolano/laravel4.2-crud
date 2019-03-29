@@ -17,7 +17,7 @@
 		@endif
 		<form method="post" action="{{ route('books.store') }}">
 			<div class="form-group">
-				{{ Form::token() }}
+				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 				<label for="name">Name:</label>
 				<input type="text" class="form-control" name="name" id="name" value="{{ Input::old('name') }}">
 			</div>
