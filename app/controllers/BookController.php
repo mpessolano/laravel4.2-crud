@@ -138,7 +138,10 @@ class BookController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$book = Book::findOrFail($id);
+		$book->delete();
+
+		return Redirect::to('books')->with('success', 'Book is successfully deleted');
 	}
 
 
